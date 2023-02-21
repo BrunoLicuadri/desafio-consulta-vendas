@@ -1,5 +1,7 @@
 package com.devsuperior.dsmeta.entities;
 
+import com.devsuperior.dsmeta.projections.ReportMinProjection;
+
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
@@ -13,7 +15,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tb_sales")
 public class Sale {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,6 +28,15 @@ public class Sale {
 	private Seller seller;
 	
 	public Sale() {
+	}
+
+	public Sale(Long id, Integer visited, Integer deals, Double amount, LocalDate date, Seller seller) {
+		this.id = id;
+		this.visited = visited;
+		this.deals = deals;
+		this.amount = amount;
+		this.date = date;
+		this.seller = seller;
 	}
 
 	public Long getId() {
