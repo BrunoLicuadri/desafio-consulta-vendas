@@ -35,7 +35,7 @@ public class SaleService {
 	LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 
 	@Transactional(readOnly = true)
-	public Page<ReportMinDTO> getReport(String minDate, String maxDate, String name, Pageable pageable){
+	public Page<ReportMinDTO> Report(String minDate, String maxDate, String name, Pageable pageable){
 
 		LocalDate startDate = LocalDate.parse(minDate, fmt1);
 		LocalDate endDate = LocalDate.parse(maxDate, fmt1);
@@ -53,7 +53,7 @@ public class SaleService {
 		//Sale entity = new Sale();
 		//entity.setAmount(dto.getAmount);
 
-		Page<ReportMinDTO> dto= saleRepo.getReport();
+		Page<ReportMinDTO> dto= saleRepo.Report();
 		return new ReportMinDTO(dto);
 	}
 

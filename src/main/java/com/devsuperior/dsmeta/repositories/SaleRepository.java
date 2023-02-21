@@ -19,6 +19,6 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             "GROUP BY tb_sales.id, tb_seller.name" +
             "ORDER BY tb_sales.id"
         )
-    Page<Sale> getReport(LocalDate startDate, LocalDate endDate, String name, Pageable pageable);
+    Page<Sale> Report (LocalDate startDate, LocalDate endDate, String name, Pageable pageable);
 
 }
