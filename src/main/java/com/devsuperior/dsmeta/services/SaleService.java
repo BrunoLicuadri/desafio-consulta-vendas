@@ -52,9 +52,9 @@ public class SaleService {
 
 		//Sale entity = new Sale();
 		//entity.setAmount(dto.getAmount);
-
-		Page<ReportMinDTO> dto= saleRepo.Report();
-		return new ReportMinDTO(dto);
+		//Page<ReportMinDTO> dto= saleRepo.Report(startDate, endDate, name, pageable);
+		Page<Sale> dto = saleRepo.Report(startDate, endDate, name, pageable);
+		return new Sale(dto);
 	}
 
 
