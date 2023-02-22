@@ -1,6 +1,7 @@
 package com.devsuperior.dsmeta.repositories;
 
 import com.devsuperior.dsmeta.dto.ReportMinDTO;
+import com.devsuperior.dsmeta.dto.SummaryMinDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,14 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             "ORDER BY obj.id"
         )
     Page<ReportMinDTO> report (LocalDate startDate, LocalDate endDate, String name, Pageable pageable);
+
+
+    @Query("SELECT new com.devsuperior.dsmeta.dto.SummaryMinDTO (obj.date, SUM (obj.amount), obj.seller.name)" +
+            "FROM Sale obj" +
+            "WHERE obj.date BETWEEN :startDate AND endDate" +
+            "WHERE UPPER (obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%')" +
+            "ORDER BY obj.date"
+    )
+    Page<SummaryMinDTO> summary (LocalDate startDate, LocalDate endDate, Pageable pageable);
 
 }
