@@ -23,11 +23,11 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     Page<ReportMinDTO> report (LocalDate startDate, LocalDate endDate, String name, Pageable pageable);
 
 
-    @Query("SELECT new com.devsuperior.dsmeta.dto.SummaryMinDTO (obj.date, SUM (obj.amount), obj.seller.name)" +
+    @Query("SELECT new com.devsuperior.dsmeta.dto.SummaryMinDTO (SUM (obj.amount), obj.seller.name)" +
             "FROM Sale obj" +
             "WHERE obj.date BETWEEN :startDate AND endDate" +
-            "WHERE UPPER (obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%')" +
-            "ORDER BY obj.date"
+            "GROUP BY obj.seller.name" +
+            "ORDER BY obj.seller.name"
     )
     Page<SummaryMinDTO> summary (LocalDate startDate, LocalDate endDate, Pageable pageable);
 
