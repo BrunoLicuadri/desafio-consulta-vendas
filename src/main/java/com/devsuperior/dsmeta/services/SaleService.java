@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import com.devsuperior.dsmeta.dto.ReportMinDTO;
 import com.devsuperior.dsmeta.dto.SummaryMinDTO;
+import com.devsuperior.dsmeta.entities.Seller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +33,7 @@ public class SaleService {
 	}
 
 
-	DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 
 	@Transactional(readOnly = true)
@@ -51,9 +52,11 @@ public class SaleService {
 			startDate=endDate.minusYears(1L);
 		}
 
-		Page<ReportMinDTO> result = saleRepo.report(startDate, endDate, name, pageable);
-		return result.map(x-> new ReportMinDTO());
+		Page<Sale> result = saleRepo.report(startDate, endDate, name, pageable);
+		return result.map(x-> new ReportMinDTO(x));
 	}
+
+
 
 
 	@Transactional(readOnly = true)
@@ -72,8 +75,8 @@ public class SaleService {
 			startDate=endDate.minusYears(1L);
 		}
 
-		Page<SummaryMinDTO> result = saleRepo.summary(startDate, endDate, pageable);
-		return result.map(x-> new SummaryMinDTO());
+		Page<Sale> result = saleRepo.summary(startDate, endDate, pageable);
+		return result.map(x-> new SummaryMinDTO(x));
 	}
 
 
