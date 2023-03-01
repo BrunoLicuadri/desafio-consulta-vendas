@@ -11,6 +11,7 @@ import com.devsuperior.dsmeta.entities.Sale;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 
@@ -30,6 +31,6 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             "GROUP BY obj.seller.name " +
             "ORDER BY obj.seller.name "
     )
-    Page<Sale> summary (LocalDate startDate, LocalDate endDate, Pageable pageable);
+    List<SummaryMinDTO> summary (LocalDate startDate, LocalDate endDate);
 
 }

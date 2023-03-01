@@ -4,30 +4,30 @@ import com.devsuperior.dsmeta.entities.Seller;
 import com.devsuperior.dsmeta.projections.SummaryMinProjection;
 
 public class SummaryMinDTO {
-    private Double amountSum;
-    private String name;
+    private Double total;
+    private String sellerName;
 
     public SummaryMinDTO() {
     }
-    public SummaryMinDTO(Double amount, String name) {
-        this.amountSum = amount;
-        this.name = name;
+
+    public SummaryMinDTO(Double total, String sellerName) {
+        this.total = total;
+        this.sellerName = sellerName;
     }
 
-    public SummaryMinDTO(SummaryMinProjection projection) {
-        amountSum = projection.getAmountSum();
-        name = projection.getName();
+    public Double getTotal() {
+        return total;
     }
 
-    public String getName() {
-        return name;
+    public String getSellerName() {
+        return sellerName;
     }
 
     @Override
     public String toString() {
         return "SummaryMinDTO{" +
-                "amountSum=" + amountSum +
-                ", name='" + name + '\'' +
+                "total=" + total +
+                ", sellerName='" + sellerName + '\'' +
                 '}';
     }
 }
