@@ -9,24 +9,24 @@ public class ReportMinDTO {
     private Long id;
     private LocalDate date;
     private Double amount;
-    private String name;
+    private String sellerName;
 
 
     public ReportMinDTO(){
     }
 
-    public ReportMinDTO(Long id, LocalDate date, Double amount, String name){
+    public ReportMinDTO(Long id, LocalDate date, Double amount, String sellerName){
         this.id=id;
         this.date=date;
         this.amount=amount;
-        this.name=name;
+        this.sellerName=sellerName;
     }
 
-    public ReportMinDTO(Sale projection){
-        id=projection.getId();
-        date=projection.getDate();
-        amount=projection.getAmount();
-        name=projection.getSeller().getName();
+    public ReportMinDTO(Sale entity){
+        id=entity.getId();
+        date=entity.getDate();
+        amount=entity.getAmount();
+        sellerName=entity.getSeller().getName();
     }
 
     public Long getId() {
@@ -41,8 +41,8 @@ public class ReportMinDTO {
         return amount;
     }
 
-    public String getName() {
-        return name;
+    public String getSellerName() {
+        return sellerName;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ReportMinDTO {
                 "id=" + id +
                 ", date=" + date +
                 ", amount=" + amount +
-                ", name='" + name + '\'' +
+                ", name='" + sellerName + '\'' +
                 '}';
     }
 }

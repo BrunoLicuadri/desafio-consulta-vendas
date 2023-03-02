@@ -22,7 +22,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             "GROUP BY obj.id, obj.seller.name " +
             "ORDER BY obj.id "
         )
-    Page<Sale> report (LocalDate startDate, LocalDate endDate, String name, Pageable pageable);
+    Page<ReportMinDTO> report (LocalDate startDate, LocalDate endDate, String name, Pageable pageable);
 
 
     @Query("SELECT new com.devsuperior.dsmeta.dto.SummaryMinDTO (SUM (obj.amount), obj.seller.name) " +

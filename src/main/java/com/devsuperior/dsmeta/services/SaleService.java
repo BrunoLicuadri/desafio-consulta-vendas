@@ -26,6 +26,8 @@ public class SaleService {
 
 	@Autowired
 	private SaleRepository saleRepo;
+
+	static final DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	public SaleMinDTO findById(Long id) {
 		Optional<Sale> result = saleRepo.findById(id);
@@ -36,24 +38,13 @@ public class SaleService {
 	@Transactional(readOnly = true)
 	public Page<ReportMinDTO> report(String minDate, String maxDate, String name, Pageable pageable){
 
-		DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 
-		LocalDate startDate = LocalDate.parse(minDate, fmt1);
-		LocalDate endDate = LocalDate.parse(maxDate, fmt1);
+		LocalDate endDate = "".equals(maxDate) ? today : LocalDate.parse(maxDate, fmt1);
+		LocalDate startDate = "".equals(minDate) ? endDate.minusYears(1L) : LocalDate.parse(minDate, fmt1);
 
-		if(endDate.equals("")){
-			endDate = today;
-			if(startDate.equals("")){
-				startDate=endDate.minusYears(1L);
-			}
-		}
-		else if(startDate.equals("")){
-			startDate=endDate.minusYears(1L);
-		}
-
-		Page<Sale> result = saleRepo.report(startDate, endDate, name, pageable);
-		return result.map(x-> new ReportMinDTO(x));
+		Page<ReportMinDTO> result = saleRepo.report(startDate, endDate, name, pageable);
+		return result;
 	}
 
 
@@ -62,13 +53,12 @@ public class SaleService {
 	@Transactional(readOnly = true)
 	public List<SummaryMinDTO> summary(String minDate, String maxDate){
 
-		DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 
 		LocalDate endDate = "".equals(maxDate) ? today : LocalDate.parse(maxDate, fmt1);
 		LocalDate startDate = "".equals(minDate) ? endDate.minusYears(1L) : LocalDate.parse(minDate, fmt1);
 
-		return saleRepo.summary(endDate, startDate);
+		return saleRepo.summary(startDate, endDate);
 	}
 
 
